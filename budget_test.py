@@ -15,7 +15,6 @@ class AndroidBudget(unittest.TestCase):
     def setUp(self):
         desired_caps = {}
         desired_caps['platformName'] = 'Android'
-        desired_caps['platformVersion'] = '11'
         desired_caps['deviceName'] = 'emulator-5554'
         desired_caps['appPackage'] = 'protect.budgetwatch'
         desired_caps['appActivity'] = '.MainActivity'
@@ -44,20 +43,20 @@ class AndroidBudget(unittest.TestCase):
             add.click()
             
             name = self.driver.find_element(By.ID, 'protect.budgetwatch:id/budgetNameEdit')
-            name.set_text("teste2")
+            name.set_text("teste")
 
             value = self.driver.find_element(By.ID, 'protect.budgetwatch:id/valueEdit')
             value.set_text("1000")
 
             save = self.driver.find_element(By.ID, 'protect.budgetwatch:id/action_save')
             save.click()
-            self.time.sleep(3000)
             saved=True
         else:
             print("Budget page was not opened")
         
         if saved == True:
-            self.assertEqual("teste2", self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, 'teste2')]").get_attribute('text'))
+            self.driver.implicitly_wait(5) # waits 5 seconds
+            self.assertEqual("teste", self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, 'teste')]").get_attribute('text'))
 
 
     def tearDown(self):
