@@ -58,6 +58,47 @@ class AndroidBudget(unittest.TestCase):
             self.driver.implicitly_wait(5) # waits 5 seconds
             self.assertEqual("teste", self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, 'teste')]").get_attribute('text'))
 
+    def test_app_transactions_expenses_add(self):
+
+        if self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, 'Welcome to Budget Watch')]"):
+            skip = self.driver.find_element(By.ID, 'protect.budgetwatch:id/skip')
+            skip.click()
+        else: 
+            print("Skip button is not visible")
+
+        if self.driver.find_element(By.XPATH,"//android.widget.TextView[contains(@text, 'Budget Watch')]"):
+            transactions = self.driver.find_element(By.XPATH,"//android.widget.TextView[contains(@text, 'Transactions')]")
+            transactions.click()
+            page = True
+        else:
+            page = False 
+            print("Not able to get main page")
+
+        if page == True:
+            add = self.driver.find_element(By.ID, 'protect.budgetwatch:id/action_add')
+            add.click()
+
+            name = self.driver.find_element(By.ID, 'protect.budgetwatch:id/nameEdit')
+            name.set_text("teste_expense")
+
+            # budget = self.driver.find_element(By.ID,"protect.budgetwatch:id/budgetSpinner")
+            # budget.click()
+            # select = self.driver.find_element(By.ID,"protect.budgetwatch:id/text[contains(@text, 'test')]")
+            # select.click()
+            self.driver.implicitly_wait(5)
+
+            account = self.driver.find_element(By.ID, 'protect.budgetwatch:id/accountEdit')
+            account.set_text("test_account")
+
+            value = self.driver.find_element(By.ID, 'protect.budgetwatch:id/valueEdit')
+            value.set_text("1000")
+
+            note = self.driver.find_element(By.ID, 'protect.budgetwatch:id/noteEdit')
+            note.set_text("test_note")
+
+            save = self.driver.find_element(By.ID, 'protect.budgetwatch:id/action_save')
+            save.click()
+            saved=True
 
     def tearDown(self):
         self.driver.quit()
