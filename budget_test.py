@@ -20,12 +20,9 @@ class AndroidBudget(unittest.TestCase):
         desired_caps['appActivity'] = '.MainActivity'
         self.driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
 
-############# CASE1: SAVE OPERATION SUCCESS ##################################################################
+####################### CASE1: SAVE OPERATION SUCCESS #####################################################################################################
 
     def test_app_budget_add(self):
-
-        test_names= [""," ",12,"Lucas"]
-        test_values= [" ","","teste_letras",1000]
 
         if self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, 'Welcome to Budget Watch')]"):
             skip = self.driver.find_element(By.ID, 'protect.budgetwatch:id/skip')
@@ -34,7 +31,7 @@ class AndroidBudget(unittest.TestCase):
             print("Skip button is not visible")
         
         # clicar em budget
-        
+        self.driver.implicitly_wait(5)
         if self.driver.find_element(By.XPATH,"//android.widget.TextView[contains(@text, 'Budget Watch')]"):
             budget = self.driver.find_element(By.XPATH,"//android.widget.TextView[contains(@text, 'Budgets')]")
             budget.click()
@@ -47,12 +44,13 @@ class AndroidBudget(unittest.TestCase):
             add = self.driver.find_element(By.ID, 'protect.budgetwatch:id/action_add')
             add.click()
             
+            self.driver.implicitly_wait(5) # waits 5 seconds
             name = self.driver.find_element(By.ID, 'protect.budgetwatch:id/budgetNameEdit')
-            name.set_text(test_names[3])
-
+            name.set_text('Lucas')
+            self.driver.implicitly_wait(5)
             value = self.driver.find_element(By.ID, 'protect.budgetwatch:id/valueEdit')
-            value.set_text(test_values[3])
-
+            value.set_text('1000')
+            self.driver.implicitly_wait(5)
             save = self.driver.find_element(By.ID, 'protect.budgetwatch:id/action_save')
             save.click()
             saved=True
@@ -60,10 +58,10 @@ class AndroidBudget(unittest.TestCase):
             print("Budget page was not opened")
         
         if saved == True:
-            self.driver.implicitly_wait(5) # waits 5 seconds
-            self.assertEqual(test_names[3], self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, 'Lucas')]").get_attribute('text'))
+            self.driver.implicitly_wait(10) # waits 5 seconds
+            self.assertEqual('Lucas', self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, 'Lucas')]").get_attribute('text'))
 
-####################### CASE2: SAVE OPERATION ERROR (NAME EMPTY) ##################################################################### 
+####################### CASE2: TRY SAVE BUDGET WITHOUT FILL REQUIRED FIELDS (NAME/VALUE EMPTY) ############################################################# 
 
     def test_app_budget_add_value_empty(self):
         if self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, 'Welcome to Budget Watch')]"):
@@ -118,10 +116,40 @@ class AndroidBudget(unittest.TestCase):
         save.click()
         
         self.driver.implicitly_wait(5)
+        self.assertEqual('Budget type is empty',self.driver.find_element(By.ID, 'protect.budgetwatch:id/snackbar_text').get_attribute('text'))
+
+
+###################### CASE3: TRY SAVE BUDGET WITH INVALID DATA (LETTER IN VALUE, NUMBER IN NAME, 11 CHARACTERS IN VALUE) #################################
+
+    def test_insert_letter_in_value(self):
+        if self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, 'Welcome to Budget Watch')]"):
+            skip = self.driver.find_element(By.ID, 'protect.budgetwatch:id/skip')
+            skip.click()
+
+        # clicar em budget
+        self.driver.implicitly_wait(5) # waits 5 seconds
+        budget = self.driver.find_element(By.XPATH,"//android.widget.TextView[contains(@text, 'Budgets')]")
+        budget.click()
+
+        self.driver.implicitly_wait(5)
+        add = self.driver.find_element(By.ID, 'protect.budgetwatch:id/action_add')
+        add.click()
+
+        self.driver.implicitly_wait(5)
+        name = self.driver.find_element(By.ID, 'protect.budgetwatch:id/budgetNameEdit')
+        name.set_text('lucas')
+
+        self.driver.implicitly_wait(5)
+        value = self.driver.find_element(By.ID, 'protect.budgetwatch:id/valueEdit')
+        value.set_text("abc")
+
+        self.driver.implicitly_wait(5)
+        save = self.driver.find_element(By.ID, 'protect.budgetwatch:id/action_save')
+        save.click()
+        
+        self.driver.implicitly_wait(5)
         self.assertEqual('Budget value is empty',self.driver.find_element(By.ID, 'protect.budgetwatch:id/snackbar_text').get_attribute('text'))
-
-
-############################# CASE3: INVALID NAME (NUMBER IN NAME) #########################################################
+        
 
     def test_insert_number_in_name(self):
         if self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, 'Welcome to Budget Watch')]"):
@@ -139,7 +167,7 @@ class AndroidBudget(unittest.TestCase):
 
         self.driver.implicitly_wait(5)
         name = self.driver.find_element(By.ID, 'protect.budgetwatch:id/budgetNameEdit')
-        name.set_value(12)
+        name.set_value(100)
 
         self.driver.implicitly_wait(5)
         value = self.driver.find_element(By.ID, 'protect.budgetwatch:id/valueEdit')
@@ -150,11 +178,10 @@ class AndroidBudget(unittest.TestCase):
         save.click()
         
         self.driver.implicitly_wait(5)
-        #not should allow number
-        self.assertNotEqual(12,self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, '12')]").get_attribute('text'))
-############################# CASE4: MAX LIMIT VALUE AND NAME ######################################################
+        self.assertEqual('Budget type is empty',self.driver.find_element(By.ID, 'protect.budgetwatch:id/snackbar_text').get_attribute('text'))
 
-    def max_limit_name(self):
+
+    def test_insert_11_characters_in_value(self):
         if self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, 'Welcome to Budget Watch')]"):
             skip = self.driver.find_element(By.ID, 'protect.budgetwatch:id/skip')
             skip.click()
@@ -170,7 +197,38 @@ class AndroidBudget(unittest.TestCase):
 
         self.driver.implicitly_wait(5)
         name = self.driver.find_element(By.ID, 'protect.budgetwatch:id/budgetNameEdit')
-        name.set_text("qwertyuiopasdfghjklçzxcvbnmqwet") #32 caracteres
+        name.set_text('lucas')
+
+        self.driver.implicitly_wait(5)
+        value = self.driver.find_element(By.ID, 'protect.budgetwatch:id/valueEdit')
+        value.set_text("12345678910") #11 characters
+
+        self.driver.implicitly_wait(5)
+        save = self.driver.find_element(By.ID, 'protect.budgetwatch:id/action_save')
+        save.click()
+        
+        self.driver.implicitly_wait(10)
+        self.assertEqual('Budget value is empty',self.driver.find_element(By.ID, 'protect.budgetwatch:id/snackbar_text').get_attribute('text'))
+       
+###################### CASE4: MAX LIMIT VALUE AND NAME ###################################################################################################
+
+    def test_max_limit_name(self):
+        if self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, 'Welcome to Budget Watch')]"):
+            skip = self.driver.find_element(By.ID, 'protect.budgetwatch:id/skip')
+            skip.click()
+
+        # clicar em budget
+        self.driver.implicitly_wait(5) # waits 5 seconds
+        budget = self.driver.find_element(By.XPATH,"//android.widget.TextView[contains(@text, 'Budgets')]")
+        budget.click()
+
+        self.driver.implicitly_wait(5)
+        add = self.driver.find_element(By.ID, 'protect.budgetwatch:id/action_add')
+        add.click()
+
+        self.driver.implicitly_wait(5)
+        name = self.driver.find_element(By.ID, 'protect.budgetwatch:id/budgetNameEdit')
+        name.set_text("qwertyuiopasdfghjklçzxcvbnmqwet") #31 characters
 
         self.driver.implicitly_wait(5)
         value = self.driver.find_element(By.ID, 'protect.budgetwatch:id/valueEdit')
@@ -180,42 +238,11 @@ class AndroidBudget(unittest.TestCase):
         save = self.driver.find_element(By.ID, 'protect.budgetwatch:id/action_save')
         save.click()
         
-        self.driver.implicitly_wait(5)
+        self.driver.implicitly_wait(10)
+        # Should not allow insert more than 30 characters
         self.assertFalse("qwertyuiopasdfghjklçzxcvbnmqwet",self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, 'qwertyuiopasdfghjklçzxcvbnmqwet')]").get_attribute('text'))
 
-    def min_limit_name(self):
-        if self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, 'Welcome to Budget Watch')]"):
-            skip = self.driver.find_element(By.ID, 'protect.budgetwatch:id/skip')
-            skip.click()
-
-        # clicar em budget
-        self.driver.implicitly_wait(5) # waits 5 seconds
-        budget = self.driver.find_element(By.XPATH,"//android.widget.TextView[contains(@text, 'Budgets')]")
-        budget.click()
-
-        self.driver.implicitly_wait(5)
-        add = self.driver.find_element(By.ID, 'protect.budgetwatch:id/action_add')
-        add.click()
-
-        self.driver.implicitly_wait(5)
-        name = self.driver.find_element(By.ID, 'protect.budgetwatch:id/budgetNameEdit')
-        name.set_text("aqwertyuiopasdfghjklçzxcvbnmq") #29 caracteres
-
-        self.driver.implicitly_wait(5)
-        value = self.driver.find_element(By.ID, 'protect.budgetwatch:id/valueEdit')
-        value.set_text("100")
-
-        self.driver.implicitly_wait(5)
-        save = self.driver.find_element(By.ID, 'protect.budgetwatch:id/action_save')
-        save.click()
-        
-        self.driver.implicitly_wait(5)
-        self.assertEqual("aqwertyuiopasdfghjklçzxcvbnmq",self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, 'aqwertyuiopasdfghjklçzxcvbnmq')]").get_attribute('text'))
-
-
-############################# CASE5: MIN LIMIT VALUE AND NAME ######################################################
-
-    def max_limit_value(self):
+    def test_max_limit_value(self):
         if self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, 'Welcome to Budget Watch')]"):
             skip = self.driver.find_element(By.ID, 'protect.budgetwatch:id/skip')
             skip.click()
@@ -235,17 +262,49 @@ class AndroidBudget(unittest.TestCase):
 
         self.driver.implicitly_wait(5)
         value = self.driver.find_element(By.ID, 'protect.budgetwatch:id/valueEdit')
-        value.set_text("12345678910111") #14 caracteres
+        value.set_text("1234567891") #10 caracteres
 
         self.driver.implicitly_wait(5)
         save = self.driver.find_element(By.ID, 'protect.budgetwatch:id/action_save')
         save.click()
         
+        self.driver.implicitly_wait(10)
+        # Should allow insert until 10 characters
+        self.assertEqual("0/1234567891",self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, '0/1234567891')]").get_attribute('text'))
+
+###################### CASE5: MIN LIMIT VALUE AND NAME ###################################################################################################
+
+    def test_min_limit_name(self):
+        if self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, 'Welcome to Budget Watch')]"):
+            skip = self.driver.find_element(By.ID, 'protect.budgetwatch:id/skip')
+            skip.click()
+
+        # clicar em budget
+        self.driver.implicitly_wait(5) # waits 5 seconds
+        budget = self.driver.find_element(By.XPATH,"//android.widget.TextView[contains(@text, 'Budgets')]")
+        budget.click()
+
         self.driver.implicitly_wait(5)
-        self.assertFalse("12345678910111",self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, '12345678910111')]").get_attribute('text'))
+        add = self.driver.find_element(By.ID, 'protect.budgetwatch:id/action_add')
+        add.click()
+
+        self.driver.implicitly_wait(5)
+        name = self.driver.find_element(By.ID, 'protect.budgetwatch:id/budgetNameEdit')
+        name.set_text("aqwertyuiopasdfghjklçzxcvbnmq") #29 characters
+
+        self.driver.implicitly_wait(5)
+        value = self.driver.find_element(By.ID, 'protect.budgetwatch:id/valueEdit')
+        value.set_text("100")
+
+        self.driver.implicitly_wait(5)
+        save = self.driver.find_element(By.ID, 'protect.budgetwatch:id/action_save')
+        save.click()
+        
+        self.driver.implicitly_wait(10)
+        self.assertEqual("aqwertyuiopasdfghjklçzxcvbnmq",self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, 'aqwertyuiopasdfghjklçzxcvbnmq')]").get_attribute('text'))
 
 
-    def min_limit_value(self):
+    def test_min_limit_value(self):
         if self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, 'Welcome to Budget Watch')]"):
             skip = self.driver.find_element(By.ID, 'protect.budgetwatch:id/skip')
             skip.click()
@@ -265,14 +324,14 @@ class AndroidBudget(unittest.TestCase):
 
         self.driver.implicitly_wait(5)
         value = self.driver.find_element(By.ID, 'protect.budgetwatch:id/valueEdit')
-        value.set_text("123456789101") #12 caracteres
+        value.set_text("123456789") #9 characters
 
         self.driver.implicitly_wait(5)
         save = self.driver.find_element(By.ID, 'protect.budgetwatch:id/action_save')
         save.click()
         
-        self.driver.implicitly_wait(5)
-        self.assertFalse("123456789101",self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, '123456789101')]").get_attribute('text'))
+        self.driver.implicitly_wait(10)
+        self.assertEqual("0/123456789",self.driver.find_element(By.XPATH, "//android.widget.TextView[contains(@text, '0/123456789')]").get_attribute('text'))
 
 
 
