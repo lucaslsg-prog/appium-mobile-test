@@ -1,6 +1,6 @@
 import unittest, time, os
 from builtins import id
-from testData import TestData
+from first_structure.testData import TestData
 import self as self
 from appium import webdriver
 from appium.webdriver.common.touch_action import TouchAction
