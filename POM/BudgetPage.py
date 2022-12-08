@@ -1,7 +1,7 @@
 from appium.webdriver.common.appiumby import By
 from BasePage import BasePage
 from appium.webdriver.common.touch_action import TouchAction
-
+from Data import TestData
 
 class BudgetPage(BasePage):
     add_locator = (By.ID, 'protect.budgetwatch:id/action_add')

@@ -21,7 +21,7 @@ class MyTestCase(unittest.TestCase):
         desired_caps['appActivity'] = '.MainActivity'
         self.driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
 
-    def _create_new_budget(self):
+    def test_create_new_budget(self):
         intro_page = IntroPage(self.driver)
         intro_page.click_skip()
         self.driver.implicitly_wait(30)
@@ -37,7 +37,7 @@ class MyTestCase(unittest.TestCase):
         budget_page = BudgetPage(self.driver)
         self.assertEqual(budget_page.get_first_budget(), TestData.budget_type)
 
-    def _new_budget_without_name(self):
+    def test_new_budget_without_name(self):
         intro_page = IntroPage(self.driver)
         intro_page.click_skip()
         self.driver.implicitly_wait(30)
@@ -47,7 +47,7 @@ class MyTestCase(unittest.TestCase):
         budget_page.click_add()
         add_page = AddBudgetPage(self.driver)
         self.driver.implicitly_wait(20)
-        #time.sleep(5)
+        time.sleep(5)
         add_page.type_budget_value(TestData.budget_value)
         add_page.click_save_button()
         self.assertEqual(add_page.get_error(), TestData.msg_budget_type_empty)
@@ -121,10 +121,42 @@ class MyTestCase(unittest.TestCase):
         budget_page.click_add()
         add_page = AddBudgetPage(self.driver)
         self.driver.implicitly_wait(20)
+        time.sleep(5)
         add_page.type_budget_type(TestData.budget_value)
         add_page.type_budget_value(TestData.invalid_value_over_limit)
         add_page.click_save_button()
         self.assertEqual(add_page.get_error(), TestData.msg_budget_value_empty)
+
+    def test_insert_max_characters_in_name(self):
+        intro_page = IntroPage(self.driver)
+        intro_page.click_skip()
+        self.driver.implicitly_wait(30)
+        main_page = MainPage(self.driver)
+        main_page.click_budget()
+        budget_page = BudgetPage(self.driver)
+        budget_page.click_add()
+        add_page = AddBudgetPage(self.driver)
+        self.driver.implicitly_wait(20)
+        add_page.type_budget_type(TestData.valid_max_name)
+        add_page.type_budget_value(TestData.budget_value)
+        add_page.click_save_button()
+        self.assertEqual(budget_page.get_first_budget(), TestData.valid_max_name)
+
+    def test_insert_max_characters_in_value(self):
+        intro_page = IntroPage(self.driver)
+        intro_page.click_skip()
+        self.driver.implicitly_wait(30)
+        main_page = MainPage(self.driver)
+        main_page.click_budget()
+        budget_page = BudgetPage(self.driver)
+        budget_page.click_add()
+        add_page = AddBudgetPage(self.driver)
+        self.driver.implicitly_wait(20)
+        add_page.type_budget_type(TestData.budget_type)
+        add_page.type_budget_value(TestData.valid_max_value)
+        add_page.click_save_button()
+        self.assertEqual(budget_page.get_first_budget(), TestData.budget_type)
+
 
 if __name__ == '__main__':
     unittest.main()
