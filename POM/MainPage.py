@@ -1,4 +1,5 @@
 from appium.webdriver.common.appiumby import AppiumBy
+from selenium.webdriver.common.by import By
 from BasePage import BasePage
 
 class MainPage(BasePage):
@@ -9,3 +10,6 @@ class MainPage(BasePage):
         budget_option = self.driver.find_element(*MainPage.budget_option_locator)
         budget_option.click()
 
+    def click_transactions(self):
+        transactions = self.driver.find_element(By.XPATH,"//android.widget.TextView[contains(@text, 'Transactions')]")
+        transactions.click()

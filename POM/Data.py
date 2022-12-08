@@ -11,5 +11,7 @@ class TestData(object):
     name_with_number = 1000
     invalid_name_over_limit = "Qwertyuiopasdfghjklçzxcvbnmqwet" #Should not allow insert more than 30 characters
     invalid_value_over_limit = "12345678910" #Should not allow insert more than 10 characters
+    valid_max_name = "Qwertyuiopasdfghjklçzxcvbnmqwe" # max 30 characters
+    valid_max_value = "1000000000" # max 10 characters
 
 
