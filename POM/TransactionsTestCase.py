@@ -32,25 +32,25 @@ class TransactionsTestCase(unittest.TestCase):
     # selecionar o item Budget do menu
         main_page = MainPage(self.driver)
         main_page.click_transactions()
-    # Clicar para adicionar Budget
+    # Clicar para adicionar BUdget
         transaction_page = TransactionsPage(self.driver)
         transaction_page.add_transaction_click()
         add_page = AddExpensesPage(self.driver)
         self.driver.implicitly_wait(30)
     # Inserir os dados de Budget na tela de adicionar
         add_page.type_name("teste")
-        #add_page.budget_list_locator
-        #add_page.budget_list_select()
+        add_page.budget_selector_click()
+        self.driver.implicitly_wait(30)
+        add_page.budget_list_select()
         add_page.type_account("teste1")
         add_page.type_value("100")
         add_page.type_note("teste teste teste teste")
         self.driver.hide_keyboard()
         add_page.date_click()
         add_page.click_save_button()
-       # budget_page = BudgetPage(self.driver)
 
-    # verificação do resultado
-      #  self.assertEqual(budget_page.get_first_budget(), TestData.budget_type)
+     #verificação do resultado
+        self.assertEqual(transaction_page.get_first_expense(), "teste")
 
 
 
