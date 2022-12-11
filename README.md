@@ -59,3 +59,16 @@
 3- Instalar a APK que será testada, no device real ou emulado
 
 4- Executar o comando "pytest budget_test.py"
+
+
+# Para Projeto Final: Obter appPackage e appActivity names
+    1 - Abrir emulador
+    2 - Executar comando "adb shell pm list packages"
+    3 - Pegar o nome completo após 'package:'
+    4 - Adicionar na capabilitie de appPackage o conteúdo: 'com.blogspot.e_kanivets.moneytracker'
+    5 - Executar comando 'adb logcat'
+    6 - Abrir a apk no emulador
+    7 - Parar o log e procurar pelo nome do appPackage
+    8 - Pegar o nome que vem após a '/' 
+    9 - 'com.blogspot.e_kanivets.moneytracker/.activity.record.MainActivity'
+    10 - Portando o nome do appActivity será: '.activity.record.MainActivity'

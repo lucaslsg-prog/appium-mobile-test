@@ -15,9 +15,9 @@ class MyTestCase(unittest.TestCase):
         desired_caps = {}
         desired_caps['platformName'] = 'Android'
         desired_caps['deviceName'] = 'emulator-5554'
-        desired_caps['appPackage'] = 'moneytracker'
-        desired_caps['appActivity'] = '.MainActivity'
-        self.driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
+        desired_caps['appPackage'] = 'com.blogspot.e_kanivets.moneytracker'
+        desired_caps['appActivity'] = '.activity.record.MainActivity'
+        self.driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
 
     def test_add_new_income(self):
         records_page = ViewRecordsPage(self.driver)
@@ -56,7 +56,7 @@ class MyTestCase(unittest.TestCase):
         self.driver.implicitly_wait(30)
         income_page.save_new_register()
         self.driver.implicitly_wait(30)
-        self.assertEqual(income_page.get_errorr(), TestData.msg_input_over_limit)
+        self.assertEqual(income_page.get_error(), TestData.msg_input_over_limit)
         
     def test_add_new_price_with_letter(self):
         records_page = ViewRecordsPage(self.driver)
@@ -69,7 +69,7 @@ class MyTestCase(unittest.TestCase):
         self.driver.implicitly_wait(30)
         income_page.save_new_register()
         self.driver.implicitly_wait(30)
-        self.assertEqual(income_page.get_errorr(), TestData.msg_input_required_empty)
+        self.assertEqual(income_page.get_error(), TestData.msg_input_required_empty)
         
     def test_add_new_price_empty(self):
         records_page = ViewRecordsPage(self.driver)
@@ -81,7 +81,7 @@ class MyTestCase(unittest.TestCase):
         self.driver.implicitly_wait(30)
         income_page.save_new_register()
         self.driver.implicitly_wait(30)
-        self.assertEqual(income_page.get_errorr(), TestData.msg_input_required_empty)
+        self.assertEqual(income_page.get_error(), TestData.msg_input_required_empty)
         
     def test_add_new_category_with_numbers(self):
         records_page = ViewRecordsPage(self.driver)
@@ -106,7 +106,7 @@ class MyTestCase(unittest.TestCase):
         self.driver.implicitly_wait(30)
         income_page.save_new_register()
         self.driver.implicitly_wait(30)
-        self.assertEqual(income_page.get_errorr(), TestData.msg_input_required_empty)
+        self.assertEqual(income_page.get_error(), TestData.msg_input_required_empty)
         
 if __name__ == '__main__':
     unittest.main()
