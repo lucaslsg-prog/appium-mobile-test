@@ -108,5 +108,17 @@ class MyTestCase(unittest.TestCase):
         self.driver.implicitly_wait(30)
         self.assertEqual(income_page.get_error(), TestData.msg_input_required_empty)
         
+    def test_add_new_title_empty(self):
+        records_page = ViewRecordsPage(self.driver)
+        records_page.open_add_income_page()
+        self.driver.implicitly_wait(30)
+        income_page = AddRegisterPages(self.driver)
+        income_page.insert_price(TestData.valid_price)
+        income_page.insert_category(TestData.valid_category)
+        self.driver.implicitly_wait(30)
+        income_page.save_new_register()
+        self.driver.implicitly_wait(30)
+        self.assertEqual(records_page.get_title(), TestData.valid_category)
+        
 if __name__ == '__main__':
     unittest.main()

@@ -12,7 +12,7 @@
         TC3 - Tentar salvar com Category vazio -> DONE
 
     Campo de Title:
-        TC1 - Deixar somente title em branco e observar se assume o valor de category -> IN PROGRESS
+        TC1 - Deixar somente title em branco e observar se assume o valor de category -> DONE
         TC2 - Inserir Title corretamente e observar se persiste após salvar -> DONE
     
     Validação da Data: (IN PROGRESS)
