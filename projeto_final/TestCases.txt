@@ -1,20 +1,21 @@
 # Income/Expense page
     Campo de Price:
-        TC1 - Inserir preço com 13 caracteres numéricos (caminho feliz)
-        TC2 - Inserir preço com 14 caracteres numéricos
-        TC3 - Inserir preço com letras
-        TC4 - Tentar salvar com preço vazio
+        TC1 - Inserir somente valores validos e salvar income-> DONE
+        TC2 - Inserir preço com 13 caracteres numéricos (caminho feliz) -> DONE
+        TC3 - Inserir preço com 14 caracteres numéricos -> DONE
+        TC4 - Inserir preço com letras -> DONE
+        TC5 - Tentar salvar com preço vazio -> DONE
     
     Campo de Category:
-        TC1 - Inserir Category correto (caminho feliz)
-        TC2 - Inserir Category com caracteres numéricos
-        TC3 - Tentar salvar com Category vazio
+        TC1 - Inserir Category correto (caminho feliz) -> DONE
+        TC2 - Inserir Category com caracteres numéricos -> DONE
+        TC3 - Tentar salvar com Category vazio -> DONE
 
     Campo de Title:
-        TC1 - Deixar somente title em branco e observar se assume o valor de category
-        TC2 - Inserir Title corretamente e observar se persiste após salvar
+        TC1 - Deixar somente title em branco e observar se assume o valor de category -> IN PROGRESS
+        TC2 - Inserir Title corretamente e observar se persiste após salvar -> DONE
     
-    Validação da Data:
+    Validação da Data: (IN PROGRESS)
         TC1 - Preencher campos corretamente com data futura
         TC2 - Preencher campos corretamente com data passada
         OBS - Data presente já vem setada por default
