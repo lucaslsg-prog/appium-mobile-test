@@ -1,29 +1,29 @@
 # Income/Expense page
     Campo de Price:
-        TC1 - Inserir somente valores validos e salvar income-> DONE
-        TC2 - Inserir preço com 13 caracteres numéricos (caminho feliz) -> DONE
-        TC3 - Inserir preço com 14 caracteres numéricos -> DONE
-        TC4 - Inserir preço com letras -> DONE
-        TC5 - Tentar salvar com preço vazio -> DONE
+        TC1 - Inserir somente valores validos e salvar income(DONE)
+        TC2 - Inserir preço com 13 caracteres numéricos (caminho feliz) (DONE)
+        TC3 - Inserir preço com 14 caracteres numéricos (DONE)
+        TC4 - Inserir preço com letras (DONE)
+        TC5 - Tentar salvar com preço vazio (DONE)
     
     Campo de Category:
-        TC1 - Inserir Category correto (caminho feliz) -> DONE
-        TC2 - Inserir Category com caracteres numéricos -> DONE
-        TC3 - Tentar salvar com Category vazio -> DONE
+        TC1 - Inserir Category correto (caminho feliz) (DONE)
+        TC2 - Inserir Category com caracteres numéricos (DONE)
+        TC3 - Tentar salvar com Category vazio (DONE)
 
     Campo de Title:
-        TC1 - Deixar somente title em branco e observar se assume o valor de category -> DONE
-        TC2 - Inserir Title corretamente e observar se persiste após salvar -> DONE
+        TC1 - Deixar somente title em branco e observar se assume o valor de category (DONE)
+        TC2 - Inserir Title corretamente e observar se persiste após salvar (DONE)
     
-    Validação da Data: (IN PROGRESS)
-        TC1 - Preencher campos corretamente com data futura
-        TC2 - Preencher campos corretamente com data passada
-        OBS - Data presente já vem setada por default
+    Validação da Data:
+        TC1 - Preencher campos corretamente com data futura (DONE)
+        TC2 - Preencher campos corretamente com data passada (DONE)
+        OBS - Data presente já vem setada por default (DONE)
     
     Validação de Records:
-        TC1 - Efeturar registro e validar listagem
-        TC2 - Verificar para registro com data antiga selecionando "All time"
+        TC1 - Efeturar registro e validar listagem (DONE)
+        TC2 - Verificar para registro com data antiga selecionando "All time" (DONE)
 
-    Validação de Edit e Delete:
-        TC1 - Fazer registro, salvar e editar, observar mudanças
-        TC2 - Fazer registro, salvar e deletar, observar ausência
+    Validação de Edit e Delete: 
+        TC1 - Fazer registro, salvar e editar, observar mudanças (DONE)
+        TC2 - Fazer registro, salvar e deletar, observar ausência (DONE)

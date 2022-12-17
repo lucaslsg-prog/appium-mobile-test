@@ -72,3 +72,10 @@
     8 - Pegar o nome que vem após a '/' 
     9 - 'com.blogspot.e_kanivets.moneytracker/.activity.record.MainActivity'
     10 - Portando o nome do appActivity será: '.activity.record.MainActivity'
+
+# Para Execução mais eficiente dos testes:
+    1 - Adicionado o marcardor para selecionar sequencia de execução pelo comando: 'pip install pytest-order'
+
+    2 - Para executar mais de uma vez em caso de falhas desnecessárias, foi utilizado o recurso de retest pelo comando: 'pip install pytest-rerunfailures'
+
+    3 - Os testes foram executados utilizando o comando: 'pytest TestCases.py -vv --reruns 2' para executar mais duas vezes em caso de falha.

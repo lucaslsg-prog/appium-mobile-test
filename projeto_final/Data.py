@@ -8,3 +8,5 @@ class TestData(object):
     invalid_category_with_number = "123"
     valid_title = "Test_Title"
     valid_category = "Test_Category"
+    title_edited = "Test_Title_Edited"
+    total_after_delete = "+ 0 NON"
